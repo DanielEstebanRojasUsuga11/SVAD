@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SVAD</title>
+        <!-- Agrega la referencia a Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="login-container" class="container">
+            <div class="logo text-center mt-4">       
+                <img src="imagenes/logo.jpeg" alt="Logo de la Compañía" class="img-fluid">       
+            </div>
+            <h2 class="text-center">Iniciar Sesión</h2>
+            <form action="inicio.html" method="post">
+                <div class="form-group">
+                <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" required>
+                </div>
+                <div class="form-group">    
+                <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" class="form-control" required>
+                </div>   
+                <div class="text-center">     
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+            </form>
+        </div>
+        <!-- Agrega la referencia a Bootstrap JS y jQuery (opcional) si necesitan componentes interactivos -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
