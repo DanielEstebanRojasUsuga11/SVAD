@@ -55,12 +55,34 @@
 
         <!-- Contenido -->
         <article>
-            <h1 class="text-center">Bienvenido a la Página de Equipos</h1>
-            <div class="text-center mt-4 button-group">
-                <a href="empleados.html" class="btn btn-primary">Empleados</a>
-                <a href="encuestaAsociada.html" class="btn btn-primary">Encuestas Asociadas</a>
-            </div>
+            <h1 class="text-center">Bienvenido a la Página de Encuesta Asociada</h1>
         </article>
+
+        <!-- Formulario de Asociación de Encuestas -->
+        <section class="mt-5">
+            <h2 class="text-center">Asociar Encuesta a Usuario</h2>
+            <form class="mx-auto" id="associationForm" style="max-width: 600px;">
+                <div class="form-group">
+                    <label for="associationUserId">ID del Usuario</label>
+                    <input type="text" class="form-control" id="associationUserId" name="userId" required>
+                </div>
+                <div class="form-group">
+                    <label for="surveyId">ID de la Encuesta</label>
+                    <input type="text" class="form-control" id="surveyId" name="surveyId" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Asociar Encuesta</button>
+            </form>
+        </section>
+
+        <!-- Listado de Encuestas Asociadas -->
+        <section class="mt-5">
+            <h2 class="text-center">Encuestas Asociadas</h2>
+            <div class="mx-auto" style="max-width: 600px;">
+                <ul class="list-group" id="associatedSurveysList">
+                    <!-- Las encuestas asociadas se mostrarán aquí -->
+                </ul>
+            </div>
+        </section>
 
         <!-- Pie de Página -->
         <footer class="mt-5">
@@ -74,5 +96,25 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('associationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtener los valores de los campos
+            var userId = document.getElementById('associationUserId').value;
+            var surveyId = document.getElementById('surveyId').value;
+
+            // Crear un nuevo elemento de lista
+            var listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.textContent = 'Usuario ID: ' + userId + ' - Encuesta ID: ' + surveyId;
+
+            // Añadir el nuevo elemento al listado
+            document.getElementById('associatedSurveysList').appendChild(listItem);
+
+            // Limpiar los campos del formulario
+            document.getElementById('associationForm').reset();
+        });
+    </script>
 </body>
 </html>

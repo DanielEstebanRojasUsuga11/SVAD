@@ -3,16 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVAD</title>
+    <title>SVAD - Responder Encuesta</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .button-group a {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -60,26 +53,13 @@
 
         <!-- Contenido -->
         <article>
-            <h1 class="text-center">Bienvenido a la Página de Encuestas</h1>
-            <div class="text-center mt-4 button-group">
-                <a href="formularios.html" class="btn btn-primary">Formulario</a>
-                <a href="preguntas.html" class="btn btn-primary">Preguntas</a>
-            </div>
-
-            <!-- Input para cargar encuestas -->
-            <div class="mt-4">
-                <input type="file" id="file-upload" accept=".pdf,.doc,.docx" style="display: none;">
-                <select id="encuestas-disponibles" name="encuestas-disponibles[]" multiple class="form-control">
-                    <!-- Aquí debes cargar dinámicamente las encuestas desde tu base de datos -->
-                    <option value="1">Encuesta 1</option>
-                    <option value="2">Encuesta 2</option>
-                    <option value="3">Encuesta 3</option>
-                    <option value="4">Encuesta 4</option>
-                    <option value="5">Encuesta 5</option>
-                    <!-- Agrega más opciones aquí -->
-                </select>
-                <a href="#" class="btn btn-primary mt-2">Ver</a>
-            </div>
+            <h1 class="text-center">Responder Encuesta</h1>
+            <form id="response-form">
+                <div id="questions-container" class="mt-4"></div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">Enviar Respuestas</button>
+                </div>
+            </form>
         </article>
 
         <!-- Pie de Página -->
@@ -94,5 +74,45 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questionsContainer = document.getElementById('questions-container');
+            const surveyQuestions = JSON.parse(localStorage.getItem('surveyQuestions'));
+            if (surveyQuestions) {
+                Object.keys(surveyQuestions).forEach((key, index) => {
+                    if (key.startsWith('question-') && !key.includes('-option-')) {
+                        const questionText = surveyQuestions[key];
+                        const questionNumber = key.split('-')[1];
+                        let questionHTML = `<div class="form-group">
+                                                <label for="response-${questionNumber}">${questionText}</label>
+                                                <input type="text" id="response-${questionNumber}" name="response-${questionNumber}" class="form-control" required>
+                                            </div>`;
+                        
+                        const options = Object.keys(surveyQuestions).filter(optionKey => optionKey.startsWith(`question-${questionNumber}-option-`));
+                        if (options.length > 0) {
+                            questionHTML = `<div class="form-group">
+                                                <label>${questionText}</label>`;
+                            options.forEach(option => {
+                                questionHTML += `<div class="form-check">
+                                                    <input type="radio" class="form-check-input" name="response-${questionNumber}" value="${surveyQuestions[option]}" required>
+                                                    <label class="form-check-label">${surveyQuestions[option]}</label>
+                                                </div>`;
+                            });
+                            questionHTML += `</div>`;
+                        }
+                        
+                        questionsContainer.innerHTML += questionHTML;
+                    }
+                });
+            }
+        });
+
+        document.getElementById('response-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            console.log(Object.fromEntries(formData.entries()));
+            alert('Respuestas enviadas con éxito');
+        });
+    </script>
 </body>
 </html>
